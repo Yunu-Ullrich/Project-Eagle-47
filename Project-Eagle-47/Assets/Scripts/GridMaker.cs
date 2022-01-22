@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GridMaker : MonoBehaviour
 {
-    private int rows 8;
+    private int rows = 8;
     private int coloums = 4;
     private int ballSize = 1;
     // Start is called before the first frame update
@@ -14,12 +14,12 @@ public class GridMaker : MonoBehaviour
     }
     private void GenerateGrid()
     {
-        GameObject referenceBall = (GameObject)Istantiate(Resources.Load("Ball Red"));
+        GameObject referenceBall = (GameObject)Instantiate(Resources.Load("Ball Red"));
         for (int row = 0; row < rows; row++)
         {
             for (int col = 0; col < coloums; col++)
             {
-                GameObject ball = (GameObject)Istantiate(referenceBall, transform);
+                GameObject ball = (GameObject)Instantiate(referenceBall, transform);
 
                 int posX = col * ballSize;
                 int posY = row * -ballSize;
@@ -28,7 +28,6 @@ public class GridMaker : MonoBehaviour
             }
         }
         Destroy(referenceBall);
-
         float gridW = coloums * ballSize;
         float gridH = rows * ballSize;
         transform.position = new Vector2(-gridW / 2 + ballSize / 2, gridH / 2 - ballSize / 2);
