@@ -41,6 +41,20 @@ public class IOService : MonoBehaviour
         PlayerPrefs.SetInt(key, pInt);
     }
 
+    public int getInt(LocalFile file)
+    {
+        string key;
+        LocalFileZuStringUmwandler.TryGetValue(file, out key);
+        return PlayerPrefs.GetInt(key);
+    }
+    
+    public string getString(LocalFile file)
+    {
+        string key;
+        LocalFileZuStringUmwandler.TryGetValue(file, out key);
+        return PlayerPrefs.GetString(key);
+    }
+
 
     private void SetupDictionary()
     {
