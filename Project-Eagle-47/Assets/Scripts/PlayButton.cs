@@ -8,6 +8,6 @@ public class PlayButton : MonoBehaviour
     public void StartGame()
     {
         sceneService.ChangeScene(Scenetype.GAME);
-        audio.Play();
+
     }
 }

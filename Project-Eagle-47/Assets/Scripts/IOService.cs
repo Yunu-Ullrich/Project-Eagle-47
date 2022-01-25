@@ -7,7 +7,7 @@ public class IOService : MonoBehaviour
     private Dictionary<LocalFile, string> LocalFileZuStringUmwandler =
         new Dictionary<LocalFile, string>();
     
-    void Start()
+    void Awake()
     {
         SetupDictionary();
     }
@@ -32,6 +32,7 @@ public class IOService : MonoBehaviour
         string key;
         LocalFileZuStringUmwandler.TryGetValue(LocalFile.DIFFICULTY, out key);
         PlayerPrefs.SetString(key, pString);
+        Debug.Log("IO Service saving File key: " + key+ " pString: "+pString);
     }
 
     public void setInt(int pInt, LocalFile file)
@@ -50,9 +51,13 @@ public class IOService : MonoBehaviour
     
     public string getString(LocalFile file)
     {
+        Debug.Log("IO Service loading from file: " + file);
         string key;
         LocalFileZuStringUmwandler.TryGetValue(file, out key);
-        return PlayerPrefs.GetString(key);
+        Debug.Log("Loading from Keys" + LocalFileZuStringUmwandler.Keys.Count);
+        string pString = PlayerPrefs.GetString(key);
+        Debug.Log("IO Service loading File key: " + key + " pString: " + pString);
+        return pString;
     }
 
 
