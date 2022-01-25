@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class SoundService : MonoBehaviour
 {
     public IOService ioService;
-    [SerializeField] Image SoundButton;
-    [SerializeField] Image NoSoundButton;
+    [SerializeField] GameObject soundIcon;
+    [SerializeField] GameObject soundOffIcon;
     private bool muted = false;
     // Start is called before the first frame update
     void Start()
@@ -19,7 +19,7 @@ public class SoundService : MonoBehaviour
 
     public void OnButtonPress()
     {
-        if (muted == false)
+        if (!muted)
         {
             muted = true;
             AudioListener.pause = true;
@@ -44,15 +44,15 @@ public class SoundService : MonoBehaviour
 
     private void buttonSprite()
     {
-        if (muted == false)
+        if (!muted)
         {
-            SoundButton.enabled = true;
-            NoSoundButton.enabled = false;
+            soundIcon.SetActive(true);
+            soundOffIcon.SetActive(false);
         }
         else
         {
-            SoundButton.enabled = false;
-            NoSoundButton.enabled = true;
+            soundIcon.SetActive(false);
+            soundOffIcon.SetActive(true);
         }
     }
     
