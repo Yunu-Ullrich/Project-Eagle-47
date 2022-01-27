@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class GridVisualizer : MonoBehaviour, IGridListenerAS
 {
-    GameObject[,] gems = new GameObject[3, 4];
-    int width = 50;
+    GameObject[,] gems = new GameObject[9, 15];
+    float width = 0.5f;
     public CreateGrid cG;
     Dictionary<int, GameObject> farbe = new Dictionary<int, GameObject>();
 
-    void Start()
-    {
-        Debug.Log(cG);
-        cG.registerGridListener(this);
-    }
     public void gridInfo (int x, int y, int status)
     {
         if(status == 0)
@@ -37,14 +32,16 @@ public class GridVisualizer : MonoBehaviour, IGridListenerAS
         farbe.TryGetValue(status, out gem);
         var go = (GameObject)Instantiate(gem);
         gems[x, y] = go;
-        int posX = x * width;
-        int posY = y * width;
+        float posX = x * width;
+        float posY = y * width * -1;
         go.transform.position = new Vector2(posX, posY);
     }
     
     void Awake()
     {
         initDictionary();
+        Debug.Log("registering cG");
+        cG.registerGridListener(this);
     }
 
     private void initDictionary()

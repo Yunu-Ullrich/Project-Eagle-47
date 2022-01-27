@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class CreateGrid : MonoBehaviour
 {
-    int[,] grid = new int[3, 4];
+    int[,] grid = new int[9, 15];
     List<IGridListenerAS> registry = new List<IGridListenerAS> {};
     List<Position> leftpos = new List<Position> 
-    { 
-        new Position(-1,-1), 
-        new Position(0,- 1),
+    {  
+        new Position(0,-1),
         new Position(1,0),
         new Position(0,1),
-        new Position(-1,1),
         new Position(-1,0)
     };
     List<Position> rightpos = new List<Position> 
@@ -20,11 +18,14 @@ public class CreateGrid : MonoBehaviour
         new Position(-1,0), 
         new Position(1,0),
         new Position(0,-1),
-        new Position(1,-1),
         new Position(0,1),
-        new Position(1,1)
     };
 
+    void Start()
+    {
+        Debug.Log("creating testGrid");
+        testGrid();
+    }
     public void registerGridListener(IGridListenerAS igridListener)
     {
         registry.Add(igridListener);
@@ -37,26 +38,16 @@ public class CreateGrid : MonoBehaviour
 
     public void testGrid()
     {
+        int colour;
         for (int i = 0; i<grid.GetLength(0); i++)
         {
-            for (int j = 0; j<grid.GetLength(1); j++)
+            for (int j = 0; j<grid.GetLength(1) - 5; j++)
             {
-                Debug.Log("I (x): " + i + " J (y): " + j);
-                addGemUnchecked(i, j, 1);
+                colour = Random.Range(1, 7);
+                addGemUnchecked(i, j, colour);
             }
         }
          
-    }
-
-    public void LogMe()
-    {
-        for (int i = 0; i < grid.GetLength(0); i++)
-        {
-            for (int j = 0; j < grid.GetLength(1); j++)
-            {
-                Debug.Log(i + "|" + j + " = " + grid[i, j]);
-            }
-        }
     }
 
     public void addGem(int x, int y, int status)
@@ -74,13 +65,18 @@ public class CreateGrid : MonoBehaviour
         }
     }
 
-    public List<Position> checkGrid(int x, int y, int status)
+    public void checkGrid(int x, int y, int status)
     {
         var positions = new List<Position>();
         checkSouroundingGem(x, y, status, positions);
 
-        // TODO continue
-        return positions;
+        if (positions.Count > 2)
+        {
+            foreach(Position pos in positions)
+            {
+                addGemUnchecked(pos.X(), pos.Y(), 0);
+            }
+        }
     }
 
     private void checkSouroundingGem(int x, int y, int status, List<Position> positions)
@@ -144,7 +140,6 @@ public class CreateGrid : MonoBehaviour
                 if (alreadyExist == false)
                 {
                     positions.Add(new Position(posX, posY));
-                    grid[posX, posY] = 0;
                     checkSouroundingGem(posX, posY, status, positions);
                 }
             }
