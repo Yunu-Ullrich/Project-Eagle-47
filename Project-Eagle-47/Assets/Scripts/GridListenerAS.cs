@@ -1,8 +1,0 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IGridListenerAS
-{
-    void gridInfo(int x, int y, int status);
-}

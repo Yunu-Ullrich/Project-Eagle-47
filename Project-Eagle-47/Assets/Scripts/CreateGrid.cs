@@ -5,20 +5,13 @@ using UnityEngine;
 public class CreateGrid : MonoBehaviour
 {
     int[,] grid = new int[9, 15];
-    List<IGridListenerAS> registry = new List<IGridListenerAS> {};
-    List<Position> leftpos = new List<Position> 
+    List<IGridListener> registry = new List<IGridListener> {};
+    List<Position> souroundingGems = new List<Position> 
     {  
         new Position(0,-1),
         new Position(1,0),
         new Position(0,1),
         new Position(-1,0)
-    };
-    List<Position> rightpos = new List<Position> 
-    { 
-        new Position(-1,0), 
-        new Position(1,0),
-        new Position(0,-1),
-        new Position(0,1),
     };
 
     void Start()
@@ -26,12 +19,12 @@ public class CreateGrid : MonoBehaviour
         Debug.Log("creating testGrid");
         testGrid();
     }
-    public void registerGridListener(IGridListenerAS igridListener)
+    public void registerGridListener(IGridListener igridListener)
     {
         registry.Add(igridListener);
     }
 
-    public void unRegisterGridListener(IGridListenerAS igridListener)
+    public void unRegisterGridListener(IGridListener igridListener)
     {
         registry.Remove(igridListener);
     }
@@ -59,9 +52,9 @@ public class CreateGrid : MonoBehaviour
     private void addGemUnchecked(int x, int y, int status)
     {      
         grid[x, y] = status;
-        foreach (IGridListenerAS gridListenerAS in registry)
+        foreach (IGridListener gridListener in registry)
         {
-            gridListenerAS.gridInfo(x, y, status);
+            gridListener.gridInfo(x, y, status);
         }
     }
 
@@ -82,40 +75,14 @@ public class CreateGrid : MonoBehaviour
     private void checkSouroundingGem(int x, int y, int status, List<Position> positions)
     {
         positions.Add(new Position(x, y));
-        bool left = evaluateIndent(y);
-        if (left)
-        {
-            evaluateLeft(x, y, status, positions);
-        }
-        else
-        {
-            evaluateRight(x, y, status, positions);
-        }
+        evaluateGems(x, y, status, positions);
     }
 
-    public bool evaluateIndent(int y)
+    private void evaluateGems(int x, int y, int status, List<Position> positions)
     {
-        if (y % 2 == 0)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    private void evaluateLeft(int x, int y, int status, List<Position> positions)
-    {
-        foreach(Position position in leftpos)
+        foreach(Position position in souroundingGems)
         {
             evaluatePosition(x, y, status, positions, position);
-        }
-    }
-    
-    private void evaluateRight(int x, int y, int status, List<Position> positions)
-    {
-        foreach (Position position in rightpos)
-        {
-            evaluatePosition(x, y, status, positions, position);
-          
         }
     }
 

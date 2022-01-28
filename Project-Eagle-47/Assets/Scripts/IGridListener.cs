@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-interface IGridListener
+public interface IGridListener
 {
     void gridInfo(int x, int y, int status);
 }

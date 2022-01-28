@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridVisualizer : MonoBehaviour, IGridListenerAS
+public class GridVisualizer : MonoBehaviour, IGridListener
 {
     GameObject[,] gems = new GameObject[9, 15];
     float width = 0.5f;
