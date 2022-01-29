@@ -112,6 +112,7 @@ public class CreateGrid : MonoBehaviour
             }
         }
     }
+    //TODO bool isGemAt(x, y)
 
 }
 

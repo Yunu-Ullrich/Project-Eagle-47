@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Cannon : MonoBehaviour
 {
-    float rotation = 0.33f;
-    bool richtung = true;
+    float rotationGeschwindigkeit = 0.33f;
+    int rotationsVorzeichen = 1;
     void Start()
     {
 
@@ -14,25 +14,17 @@ public class Cannon : MonoBehaviour
     
     void Update()
     {
-        rotate();
+        Rotate();
     }
 
-    private void rotate()
+    private void Rotate()
     {
-        int vz = 1;
-        for (richtung)
+        var rotation = gameObject.transform.localRotation.eulerAngles.z;
+        if (rotation < 320 && rotation > 40)
         {
-            gameObject.transform.Rotate(0, 0, rotation* vz);
-            Debug.Log("GetRotation: "+getRotation());
+            rotationsVorzeichen *= -1;
         }
-        if (gameObject.transform.localRotation.eulerAngles.z < 320 || gameObject.transform.localRotation.eulerAngles.z > 40)
-        {
-            Debug.Log("GetRotation: " + getRotation());
-            Debug.Log("Vz: " + vz);
-            vz = vz * -1;
-            Debug.Log("Richtung: " + richtung);
-        }
-
+        gameObject.transform.Rotate(0, 0, rotationGeschwindigkeit * rotationsVorzeichen);
     }
 
     private float getRotation()
