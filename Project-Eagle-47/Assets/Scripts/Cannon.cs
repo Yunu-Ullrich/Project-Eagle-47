@@ -27,7 +27,7 @@ public class Cannon : MonoBehaviour
         gameObject.transform.Rotate(0, 0, rotationGeschwindigkeit * rotationsVorzeichen);
     }
 
-    private float getRotation()
+    public float getRotation()
     {
         return gameObject.transform.localRotation.eulerAngles.z;
     }

@@ -9,6 +9,7 @@ public class BewegterGem : MonoBehaviour, IGridListener
     public const float WALLTOP = 4.5f;
     public const float WALLLEFT = 2;
     public const float WALLRIGHT = 6;
+    Cannon cannon = new Cannon();
     void Start()
     {
 
@@ -16,21 +17,22 @@ public class BewegterGem : MonoBehaviour, IGridListener
 
     void Update()
     {
-        /*CalculateNextPosition();
-        CheckCollisionWall(a);
-        c= CheckCollisionGem(a);
+        
+        var a = CalculateNextPosition(cannon.getRotation(), 0.01f, new Vector2(1.99f, -6.79f));
+        bool b = CheckCollisionWall(a);
+        bool c = CheckCollisionGem(a);
         if(b)
         {
-            collideWithWall();
+            CollideWithWall(a);
         }
         else if(c)
         {
-            collideWithGem();
+            CollideWithGem(a);
         }
         else
         {
-            moveBall();
-        }*/
+            MoveGem(a);
+        }
     }
 
     private Vector2 CalculateNextPosition(float richtungsVector, float velocity, Vector2 currentPosition)
@@ -49,18 +51,23 @@ public class BewegterGem : MonoBehaviour, IGridListener
 
     private bool CheckCollisionWall(Vector2 Pos)
     {
-
+        float xLeft = -0.03f;
+        float xRight = 4.02f;
+        if (Pos.x <= xLeft || Pos.x >= xRight) {
+            return true;
+        }
+        return false;
     }
 
     private bool CheckCollisionGem(Vector2 Pos)
     {
-
+        return true;
     }
 
     private void CollideWithWall(Vector2 Pos)
     {
-
-    
+        var a = CalculateNextPosition(360 - cannon.getRotation() , 0.01f, new Vector2(1.99f, -6.79f));
+        MoveGem(a);
     }
     
     private void CollideWithGem(Vector2 Pos)
@@ -70,11 +77,11 @@ public class BewegterGem : MonoBehaviour, IGridListener
     
     private void MoveGem(Vector2 nextPos)
     {
-
+        gameObject.transform.position = nextPos;
     }
 
     public void gridInfo(int x, int y, int status)
     {
-        ;
+        
     }
 }

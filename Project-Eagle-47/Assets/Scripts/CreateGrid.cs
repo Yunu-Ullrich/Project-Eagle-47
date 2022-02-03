@@ -16,7 +16,6 @@ public class CreateGrid : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("creating testGrid");
         testGrid();
     }
     public void registerGridListener(IGridListener igridListener)
